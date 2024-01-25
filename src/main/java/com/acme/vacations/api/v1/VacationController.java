@@ -3,6 +3,8 @@ package com.acme.vacations.api.v1;
 import com.acme.vacations.model.Vacation;
 import com.acme.vacations.repository.VacationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +28,7 @@ public class VacationController {
     // end::get-aggregate-root[]
 
     @PostMapping(URI)
-    Vacation newVacation(@RequestBody Vacation vacation) {
-        return repository.save(vacation);
+    ResponseEntity<Vacation> newVacation(@RequestBody Vacation vacation) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(repository.insert(vacation));
     }
 }
