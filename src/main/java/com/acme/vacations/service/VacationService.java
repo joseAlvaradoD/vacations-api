@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class VacationService {
@@ -23,7 +24,7 @@ public class VacationService {
 
     @Cacheable(value = "vacation", key = "#vacation.id")
     public Vacation findById(Vacation vacation){
-        return this.repository.findById(vacation.getId()).orElseThrow();
+        return this.repository.findById(vacation.getId()).orElseThrow(()-> new NoSuchElementException("There is not exist any vacation package with the id: " + vacation.getId()));
     }
 
     public Vacation insert(Vacation vacation){
